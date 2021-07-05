@@ -21,7 +21,7 @@ def main():
         title = ""
 
         for i in range(len(ytitle)):
-            if ytitle[i] != "|" and ytitle[i] != '"':
+            if ytitle[i].isalnum() or ytitle[i].isspace() or ytitle[i] == "-":
                 title += ytitle[i]
 
         # chose the stream - best quality form audio only
@@ -32,14 +32,14 @@ def main():
         if os.path.exists("download/" + title + ".mp3"):
             print("File already exist")
         else:
-            download(stream)
+            download(stream, title)
             convert(title)
 
 
 # download mp4
-def download(stream):
+def download(stream, title):
     print("Downloading...")
-    stream.download("tmp/")
+    stream.download("tmp", title)
 
 
 # convert mp4 into mp3 and delete mp4 file
