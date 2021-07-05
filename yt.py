@@ -29,7 +29,7 @@ def main():
         stream = yt.streams.filter(only_audio=True).first()
 
         # check if file exist
-        if os.path.exists(title + ".mp3"):
+        if os.path.exists("download/" + title + ".mp3"):
             print("File already exist")
         else:
             download(stream)
@@ -39,7 +39,7 @@ def main():
 # download mp4
 def download(stream):
     print("Downloading...")
-    stream.download()
+    stream.download("tmp/")
 
 
 # convert mp4 into mp3 and delete mp4 file
@@ -47,19 +47,20 @@ def convert(title):
 
     # set ffmpeg
     ff = ffmpy.FFmpeg(
-        inputs={title + ".mp4": None},
-        outputs={title + ".mp3": None}
+        inputs={"tmp/" + title + ".mp4": None},
+        outputs={"download/" + title + ".mp3": None}
     )
 
     try:
         ff.run()
         os.system("cls")
-        print("\n\nCOMPLETE!")
+        print("COMPLETE!")
+        print("You can download another file")
     except:
         os.system("cls")
         print("\nError during conversion into .mp3")
     finally:
-        os.remove(title + ".mp4")
+        os.remove("tmp/" + title + ".mp4")
 
 
 main()
