@@ -2,21 +2,34 @@ from pytube import YouTube
 import ffmpy
 import os
 
-yt = input("Videos URL: ")
+while True:
 
-yt = YouTube(yt)
+    yt = input("Videos URL: ")
 
-stream = yt.streams.first()
+    try:
+        yt = YouTube(yt)
+    except:
+        print("Wrong input!")
+        continue
 
-stream.download()
+    print("Working...")
+    stream = yt.streams.first()
 
-ff = ffmpy.FFmpeg(
-    inputs = {yt.title + ".mp4" : None}, 
-    outputs = {yt.title + ".mp3" : None}
+    print("Download...")
+    stream.download()
+
+    ff = ffmpy.FFmpeg(
+        inputs={yt.title + ".mp4": None},
+        outputs={yt.title + ".mp3": None}
     )
 
-ff.run()
-
-os.remove(yt.title + ".mp4")
-
-
+    try:
+        ff.run()
+        os.system("cls")
+        print("\n\nCOMPLETE!")
+    except:
+        os.system("cls")
+        print("\nError during conversion into .mp3")
+        continue
+    finally:
+        os.remove(yt.title + ".mp4")
