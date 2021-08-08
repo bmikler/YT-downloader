@@ -39,7 +39,7 @@ def main():
 # download mp4
 def download(stream, title):
     print("Downloading...")
-    stream.download("tmp", title)
+    stream.download("tmp", title + ".mp4")
 
 
 # convert mp4 into mp3 and delete mp4 file
