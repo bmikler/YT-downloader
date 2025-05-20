@@ -1,4 +1,4 @@
-from pytube import YouTube
+from pytubefix import YouTube
 import ffmpy
 import os
 
@@ -44,7 +44,6 @@ def download(stream, title):
 
 # convert mp4 into mp3 and delete mp4 file
 def convert(title):
-
     # set ffmpeg
     ff = ffmpy.FFmpeg(
         inputs={"tmp/" + title + ".mp4": None},
@@ -53,14 +52,17 @@ def convert(title):
 
     try:
         ff.run()
-        os.system("cls")
+        clear_screen()
         print("COMPLETE!")
         print("You can download another file")
-    except:
-        os.system("cls")
-        print("\nError during conversion into .mp3")
+    except Exception as e:
+        clear_screen()
+        print(f"\nError during conversion into .mp3: {e}")
     finally:
         os.remove("tmp/" + title + ".mp4")
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 
 main()
